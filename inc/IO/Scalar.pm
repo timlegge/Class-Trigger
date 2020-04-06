@@ -1,36 +1,33 @@
 #line 1
 package IO::Scalar;
 
-
-#line 147
+use strict;
 
 use Carp;
-use strict;
-use vars qw($VERSION @ISA);
 use IO::Handle;
-
-use 5.005;
 
 ### Stringification, courtesy of B. K. Oxley (binkley):  :-)
 use overload '""'   => sub { ${*{$_[0]}->{SR}} };
 use overload 'bool' => sub { 1 };      ### have to do this, so object is true!
 
 ### The package version, both in 1.23 style *and* usable by MakeMaker:
-$VERSION = "2.110";
+our $VERSION = '2.113';
 
 ### Inheritance:
-@ISA = qw(IO::Handle);
+our @ISA = qw(IO::Handle);
 
 ### This stuff should be got rid of ASAP.
 require IO::WrapTie and push @ISA, 'IO::WrapTie::Slave' if ($] >= 5.004);
 
 #==============================
 
-#line 175
+
+
+#line 172
 
 #------------------------------
 
-#line 185
+#line 182
 
 sub new {
     my $proto = shift;
@@ -46,7 +43,7 @@ sub DESTROY {
 
 #------------------------------
 
-#line 210
+#line 207
 
 sub open {
     my ($self, $sref) = @_;
@@ -63,7 +60,7 @@ sub open {
 
 #------------------------------
 
-#line 232
+#line 229
 
 sub opened {
     *{shift()}->{SR};
@@ -71,7 +68,7 @@ sub opened {
 
 #------------------------------
 
-#line 246
+#line 243
 
 sub close {
     my $self = shift;
@@ -79,24 +76,30 @@ sub close {
     1;
 }
 
-#line 256
+#line 253
 
 
 
 #==============================
 
-#line 266
+#line 263
 
 
 #------------------------------
 
-#line 276
+#line 273
 
 sub flush { "0 but true" }
 
 #------------------------------
 
-#line 287
+#line 284
+
+sub fileno { }
+
+#------------------------------
+
+#line 295
 
 sub getc {
     my $self = shift;
@@ -108,7 +111,7 @@ sub getc {
 
 #------------------------------
 
-#line 306
+#line 314
 
 sub getline {
     my $self = shift;
@@ -121,7 +124,7 @@ sub getline {
     my $i  = *$self->{Pos};	        ### Start matching at this point.
 
     ### Minimal impact implementation!
-    ### We do the fast fast thing (no regexps) if using the
+    ### We do the fast thing (no regexps) if using the
     ### classic input record separator.
 
     ### Case 1: $/ is undef: slurp all...
@@ -192,7 +195,7 @@ sub getline {
 
 #------------------------------
 
-#line 396
+#line 404
 
 sub getlines {
     my $self = shift;
@@ -204,7 +207,7 @@ sub getlines {
 
 #------------------------------
 
-#line 417
+#line 425
 
 sub print {
     my $self = shift;
@@ -228,7 +231,7 @@ sub _old_print {
 
 #------------------------------
 
-#line 447
+#line 455
 
 sub read {
     my $self = $_[0];
@@ -244,7 +247,7 @@ sub read {
 
 #------------------------------
 
-#line 468
+#line 476
 
 sub write {
     my $self = $_[0];
@@ -259,7 +262,7 @@ sub write {
 
 #------------------------------
 
-#line 489
+#line 497
 
 sub sysread {
   my $self = shift;
@@ -268,42 +271,42 @@ sub sysread {
 
 #------------------------------
 
-#line 503
+#line 511
 
 sub syswrite {
   my $self = shift;
   $self->write(@_);
 }
 
-#line 512
+#line 520
 
 
 #==============================
 
-#line 521
+#line 529
 
 
 #------------------------------
 
-#line 531
+#line 539
 
 sub autoflush {}
 
 #------------------------------
 
-#line 542
+#line 550
 
 sub binmode {}
 
 #------------------------------
 
-#line 552
+#line 560
 
 sub clearerr { 1 }
 
 #------------------------------
 
-#line 562
+#line 570
 
 sub eof {
     my $self = shift;
@@ -312,7 +315,7 @@ sub eof {
 
 #------------------------------
 
-#line 575
+#line 583
 
 sub seek {
     my ($self, $pos, $whence) = @_;
@@ -332,7 +335,7 @@ sub seek {
 
 #------------------------------
 
-#line 599
+#line 607
 
 sub sysseek {
     my $self = shift;
@@ -341,7 +344,7 @@ sub sysseek {
 
 #------------------------------
 
-#line 613
+#line 621
 
 sub tell { *{shift()}->{Pos} }
 
@@ -350,7 +353,7 @@ sub tell { *{shift()}->{Pos} }
 # use_RS [YESNO]
 #
 # I<Instance method.>
-# Obey the curent setting of $/, like IO::Handle does?
+# Obey the current setting of $/, like IO::Handle does?
 # Default is false in 1.x, but cold-welded true in 2.x and later.
 #
 sub use_RS {
@@ -360,20 +363,20 @@ sub use_RS {
 
 #------------------------------
 
-#line 637
+#line 645
 
 sub setpos { shift->seek($_[0],0) }
 
 #------------------------------
 
-#line 648
+#line 656
 
 *getpos = \&tell;
 
 
 #------------------------------
 
-#line 660
+#line 668
 
 sub sref { *{shift()}->{SR} }
 
@@ -398,6 +401,7 @@ sub CLOSE     { shift->close(@_); }
 sub SEEK      { shift->seek(@_); }
 sub TELL      { shift->tell(@_); }
 sub EOF       { shift->eof(@_); }
+sub BINMODE   { 1; }
 
 #------------------------------------------------------------
 
@@ -407,8 +411,7 @@ __END__
 
 
 
-#line 696
+#line 705
 
 
-#line 777
-
+#line 724

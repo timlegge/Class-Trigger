@@ -1,0 +1,50 @@
+{
+   "abstract" : "Mixin to add / call inheritable triggers",
+   "author" : [
+      "Original idea by Tony Bowden <tony@kasei.com> in Class::DBI."
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Module::Install version 1.19, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "Class-Trigger",
+   "no_index" : {
+      "directory" : [
+         "inc",
+         "t"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.59",
+            "IO::Scalar" : "0",
+            "IO::WrapTie" : "0",
+            "Test::More" : "0.32"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "perl" : "5.008001"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : "0.14",
+   "x_serialization_backend" : "JSON::PP version 4.02"
+}
