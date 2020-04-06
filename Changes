@@ -1,5 +1,9 @@
 Revision history for Perl extension Class::Trigger.
 
+0.15 Sun Apr 5 22:22:30 ADT 2020
+	- Upgrade the included modules in inc to resolve
+	https://rt.cpan.org/Public/Bug/Display.html?id=119707
+
 0.14 Sun Oct 11 15:55:14 PDT 2009
         - Make this a non-dev release
 
